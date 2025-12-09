@@ -86,6 +86,9 @@ var canavar = reactive({
   savunmaGücü: 100,
 })
 
+var round = 1;
+var roundOlayları = [];
+
 // watch(
 //   () => oyuncu.can,
 //   (newValue, oldValue) => {
@@ -105,6 +108,7 @@ function Atak(katsayı = 1, b, j, k, l, i, ş) {
 
   // Canavar Saldırı
   CanavarSaldır()
+  round++;
 }
 
 function CanavarSaldır() {
@@ -126,18 +130,21 @@ function OzelAtak() {
 
 function CanBas() {
   // Can Basma Kısmı
-  {
+
     let basılacakCan = RastgeleSayıUret(0, oyuncu.saldırıGücü)
     oyuncu.can += basılacakCan
 
     if (oyuncu.can > 100) {
       oyuncu.can = 100
     }
-  }
 
+
+  LogOluştur("Oyuncu","kendine",basılacakCan,'canbasma')
   //console.log('CanBasıldı: ' + oyuncu.can)
   CanavarSaldır()
   //console.log('Canavar Saldırdı: ' + oyuncu.can)
+
+  round++
 }
 
 function RastgeleSayıUret(min, max) {
@@ -150,18 +157,29 @@ function Restart() {
   oyuncu.özelAtakHakkı = true
 }
 
-function LogOluştur(kim, kime, kaçVurdu) {
+function LogOluştur(kim, kime, kaçVurdu,aksiyon='vuruş') {
   // Her aksiyonda yeni bir olay oluştur
 
   // OBJELİ PARAMETRE YAPILACAK !!!!
+
+
+  // OLAYLAR = ARRAY OF ROUNDS
 
   var tempOlay = {
     kim: kim,
     kime: kime,
     kaçVurdu: kaçVurdu,
+    aksiyon: aksiyon,
+    round:round
   }
 
-  olaylar.push(tempOlay)
+
+  roundOlayları.push(tempOlay)
+
+
+  olaylar.push(roundOlayları)
+
+  console.log(olaylar)
 }
 
 function PixelHesapla(maxPx, canDegeri) {
