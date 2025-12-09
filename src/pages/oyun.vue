@@ -175,7 +175,7 @@ function LogOluştur(kim, kime, kaçVurdu,aksiyon='vuruş') {
 
 
   roundOlayları.push(tempOlay)
-
+//ÖRNEK COMMİT
 
   olaylar.push(roundOlayları)
 
